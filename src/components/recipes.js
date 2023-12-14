@@ -1,4 +1,4 @@
-import { View, Text, Pressable, Image, Alert } from "react-native";
+import { View, Text, Pressable, Image } from "react-native";
 import React from "react";
 import {
   widthPercentageToDP as wp,
@@ -59,7 +59,7 @@ const RecipeCard = ({ item, index, navigation }) => {
           paddingRight: isEven ? 8 : 0,
         }}
         className="flex justify-center mb-4 space-y-1"
-        onPress={() => Alert.alert("Clicked")}
+        onPress={() => navigation.navigate("RecipeDetail", { ...item })}
       >
         {/* <Image 
                       source={{uri: item.strMealThumb}}
