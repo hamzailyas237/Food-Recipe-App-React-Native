@@ -13,11 +13,16 @@ export default function HomeScreen() {
   const [activeCategory, setActiveCategory] = useState("Beef");
   const [categories, setCategories] = useState([]);
   const [meals, setMeals] = useState([]);
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     getCategories();
-    getRecipes();
+    // getRecipes();
   }, []);
+
+  useEffect(() => {
+    getRecipes();
+  }, [search]);
 
   const handleChangeCategory = (category) => {
     getRecipes(category);
@@ -43,14 +48,25 @@ export default function HomeScreen() {
       const response = await axios.get(
         `https://themealdb.com/api/json/v1/1/filter.php?c=${category}`
       );
-      // console.log('got recipes: ',response.data);
+      // console.log("got recipes: ", response.data);
       if (response && response.data) {
-        setMeals(response.data.meals);
+        if (search) {
+          const data = response.data.meals?.filter((filteredMeals) => {
+            return filteredMeals.strMeal
+              .replace(/\s/g, "")
+              .toLowerCase()
+              .includes(search.replace(/\s/g, "").toLowerCase());
+          });
+          setMeals(data);
+        } else {
+          setMeals(response.data.meals);
+        }
       }
     } catch (err) {
       console.log("error: ", err.message);
     }
   };
+
   return (
     <View className="flex-1 bg-white">
       <StatusBar style="dark" />
@@ -71,7 +87,7 @@ export default function HomeScreen() {
         {/* greetings and punchline */}
         <View className="mx-4 space-y-2 mb-2">
           <Text style={{ fontSize: hp(1.7) }} className="text-neutral-600">
-            Hello, Noman!
+            Hello, User!
           </Text>
           <View>
             <Text
@@ -96,6 +112,7 @@ export default function HomeScreen() {
             placeholderTextColor={"gray"}
             style={{ fontSize: hp(1.7) }}
             className="flex-1 text-base mb-1 pl-3 tracking-wider"
+            onChangeText={(e) => setSearch(e)}
           />
           <View className="bg-white rounded-full p-3">
             <MagnifyingGlassIcon size={hp(2.5)} strokeWidth={3} color="gray" />
