@@ -27,7 +27,8 @@ export default function HomeScreen() {
   const handleChangeCategory = (category) => {
     getRecipes(category);
     setActiveCategory(category);
-    setMeals([]);
+    setSearch("");
+    // setMeals([]);
   };
 
   const getCategories = async () => {
@@ -43,7 +44,10 @@ export default function HomeScreen() {
       console.log("error: ", err.message);
     }
   };
-  const getRecipes = async (category = "Beef") => {
+
+  const getRecipes = async (
+    category = activeCategory ? activeCategory : "Beef"
+  ) => {
     try {
       const response = await axios.get(
         `https://themealdb.com/api/json/v1/1/filter.php?c=${category}`
@@ -108,6 +112,7 @@ export default function HomeScreen() {
         {/* search bar */}
         <View className="mx-4 flex-row items-center rounded-full bg-black/5 p-[6px]">
           <TextInput
+            value={search}
             placeholder="Search any recipe"
             placeholderTextColor={"gray"}
             style={{ fontSize: hp(1.7) }}
