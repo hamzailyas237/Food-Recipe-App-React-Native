@@ -9,7 +9,7 @@ import { HeartIcon } from "react-native-heroicons/solid";
 import { ChevronLeftIcon } from "react-native-heroicons/outline";
 import { useNavigation } from "@react-navigation/native";
 
-const Favourites = () => {
+const Favourities = () => {
   const navigation = useNavigation();
   return (
     <View className="flex-1 mt-10">
@@ -25,7 +25,7 @@ const Favourites = () => {
           style={{ fontSize: hp(3.8) }}
           className="font-semibold text-neutral-600 text-center flex-1"
         >
-          Your Favourites
+          Your Favourities
         </Text>
       </View>
 
@@ -69,4 +69,4 @@ const Favourites = () => {
   );
 };
 
-export default Favourites;
+export default Favourities;

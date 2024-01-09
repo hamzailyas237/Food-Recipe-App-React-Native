@@ -23,6 +23,8 @@ import YouTubeIframe from "react-native-youtube-iframe";
 import Animated, { FadeInDown, FadeIn } from "react-native-reanimated";
 import { Platform } from "react-native";
 import * as Linking from "expo-linking";
+import { useDispatch } from "react-redux";
+import { add } from "../store/FavouritiesSlice";
 
 const ios = Platform.OS == "ios";
 
@@ -32,7 +34,10 @@ export default function RecipeDetailScreen(props) {
   const navigation = useNavigation();
   const [meal, setMeal] = useState(null);
   const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
 
+  console.log("props", props);
+  console.log("item", item);
   useEffect(() => {
     getMealData(item.idMeal);
   }, []);
@@ -51,7 +56,7 @@ export default function RecipeDetailScreen(props) {
       console.log("error: ", err.message);
     }
   };
-
+  console.log("meal", meal);
   const ingredientsIndexes = (meal) => {
     if (!meal) return [];
     let indexes = [];
@@ -75,6 +80,11 @@ export default function RecipeDetailScreen(props) {
 
   const handleOpenLink = (url) => {
     Linking.openURL(url);
+  };
+
+  const addToFavourities = () => {
+    setIsFavourite(!isFavourite);
+    dispatch(add());
   };
 
   return (
@@ -110,7 +120,7 @@ export default function RecipeDetailScreen(props) {
             <ChevronLeftIcon size={hp(3.5)} strokeWidth={4.5} color="#fbbf24" />
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => setIsFavourite(!isFavourite)}
+            onPress={() => addToFavourities()}
             className="p-2 rounded-full mr-5 bg-white"
           >
             <HeartIcon
