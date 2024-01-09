@@ -36,8 +36,6 @@ export default function RecipeDetailScreen(props) {
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
 
-  console.log("props", props);
-  console.log("item", item);
   useEffect(() => {
     getMealData(item.idMeal);
   }, []);
@@ -56,7 +54,7 @@ export default function RecipeDetailScreen(props) {
       console.log("error: ", err.message);
     }
   };
-  console.log("meal", meal);
+
   const ingredientsIndexes = (meal) => {
     if (!meal) return [];
     let indexes = [];
@@ -84,7 +82,7 @@ export default function RecipeDetailScreen(props) {
 
   const addToFavourities = () => {
     setIsFavourite(!isFavourite);
-    dispatch(add());
+    dispatch(add(item));
   };
 
   return (
