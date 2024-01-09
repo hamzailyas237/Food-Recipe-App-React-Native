@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, Image, TextInput } from "react-native";
+import { View, Text, ScrollView, Image, TextInput, Alert } from "react-native";
 import React, { useEffect, useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import {
@@ -9,11 +9,13 @@ import { BellIcon, MagnifyingGlassIcon } from "react-native-heroicons/outline";
 import Categories from "../components/categories";
 import axios from "axios";
 import Recipes from "../components/recipes";
+import { useNavigation } from "@react-navigation/native";
 export default function HomeScreen() {
   const [activeCategory, setActiveCategory] = useState("Beef");
   const [categories, setCategories] = useState([]);
   const [meals, setMeals] = useState([]);
   const [search, setSearch] = useState("");
+  const navigation = useNavigation();
 
   useEffect(() => {
     getCategories();
@@ -85,7 +87,11 @@ export default function HomeScreen() {
             source={require("../../assets/images/avatar.png")}
             style={{ height: hp(5), width: hp(5.5) }}
           />
-          <BellIcon size={hp(4)} color="gray" />
+          <BellIcon
+            size={hp(4)}
+            color="gray"
+            onPress={() => navigation.navigate("Favourites")}
+          />
         </View>
 
         {/* greetings and punchline */}

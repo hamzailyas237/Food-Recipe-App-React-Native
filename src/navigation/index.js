@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScreen from "../screens/HomeScreen";
 import WelcomeScreen from "../screens/WelcomeScreen";
 import RecipeDetailScreen from "../screens/RecipeDetailScreen";
+import Favourites from "../screens/Favourites";
 
 const Stack = createNativeStackNavigator();
 
@@ -16,6 +17,7 @@ function AppNavigation() {
       >
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Welcome" component={WelcomeScreen} />
+        <Stack.Screen name="Favourites" component={Favourites} />
         <Stack.Screen
           name="RecipeDetail"
           options={{ presentation: "fullScreenModal" }}
