@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, Image, TextInput, Alert } from "react-native";
+import { View, Text, ScrollView, Image, TextInput, Alert, TouchableOpacity } from "react-native";
 import React, { useEffect, useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import {
@@ -6,6 +6,7 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { BellIcon, MagnifyingGlassIcon } from "react-native-heroicons/outline";
+import { HeartIcon } from "react-native-heroicons/solid";
 import Categories from "../components/categories";
 import axios from "axios";
 import Recipes from "../components/recipes";
@@ -82,16 +83,27 @@ export default function HomeScreen() {
         className="space-y-6 pt-14"
       >
         {/* avatar and bell icon */}
-        <View className="mx-4 flex-row justify-between items-center mb-2">
+        <View className="mx-4 flex-row justify-between mb-2 items-center">
           <Image
             source={require("../../assets/images/avatar.png")}
             style={{ height: hp(5), width: hp(5.5) }}
           />
-          <BellIcon
-            size={hp(4)}
-            color="gray"
+
+          <TouchableOpacity
             onPress={() => navigation.navigate("Favourites")}
-          />
+            className="p-2 rounded-full mr-2"
+          >
+            {/* <BellIcon
+              size={hp(4)}
+              color="gray"
+              onPress={() => navigation.navigate("Favourites")}
+            /> */}
+            <HeartIcon
+              size={hp(3.5)}
+              strokeWidth={4.5}
+              color="gray"
+            />
+          </TouchableOpacity>
         </View>
 
         {/* greetings and punchline */}

@@ -40,9 +40,9 @@ const Favourities = () => {
 
       {!favourities?.data.length ? <Text
         style={{ fontSize: hp(3) }}
-        className="font-semibold text-neutral-600 text-center mt-5"
+        className="font-semibold text-neutral-500 text-center mt-5"
       >
-        No Data
+        "No Favourities Available"
       </Text> : favourities?.data?.map((favourite, i) => {
         return <View key={i} className="flex-row justify-between m-4">
           <View className="flex-row items-center gap-2">

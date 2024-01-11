@@ -23,8 +23,8 @@ import YouTubeIframe from "react-native-youtube-iframe";
 import Animated, { FadeInDown, FadeIn } from "react-native-reanimated";
 import { Platform } from "react-native";
 import * as Linking from "expo-linking";
-import { useDispatch } from "react-redux";
-import { add } from "../store/FavouritiesSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { add, remove } from "../store/FavouritiesSlice";
 
 const ios = Platform.OS == "ios";
 
@@ -35,6 +35,7 @@ export default function RecipeDetailScreen(props) {
   const [meal, setMeal] = useState(null);
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
+  const favourities = useSelector(state => state?.favourities)
 
   useEffect(() => {
     getMealData(item.idMeal);
@@ -85,6 +86,21 @@ export default function RecipeDetailScreen(props) {
     dispatch(add(item));
   };
 
+  const removeFromFavourities = (id) => {
+    setIsFavourite(!isFavourite);
+    dispatch(remove(id))
+  }
+
+  useEffect(() => {
+    const isFavourite = favourities.data.filter(favourite => {
+      return favourite.idMeal == item.idMeal
+    })
+    if (isFavourite.length && isFavourite[0].idMeal == item.idMeal) {
+      setIsFavourite(true)
+    }
+  }, [])
+
+
   return (
     <View className="flex-1 bg-white relative">
       <StatusBar style={"light"} />
@@ -118,7 +134,11 @@ export default function RecipeDetailScreen(props) {
             <ChevronLeftIcon size={hp(3.5)} strokeWidth={4.5} color="#fbbf24" />
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => addToFavourities()}
+            onPress={() => {
+              isFavourite ? removeFromFavourities(item.idMeal) :
+                addToFavourities()
+            }
+            }
             className="p-2 rounded-full mr-5 bg-white"
           >
             <HeartIcon
@@ -359,5 +379,6 @@ export default function RecipeDetailScreen(props) {
         )}
       </ScrollView>
     </View>
+
   );
 }
